@@ -23,12 +23,32 @@
         <h2>Weekly Meal Calendar</h2>
         <p>Select meals for each day below:</p>
         <div class="calendar-container">
-            <p>📅 (Interactive calendar will go here soon!)</p>
+            <section id="meal-calendar">
+    <div class="calendar">
+        <div class="day" data-day="Monday">Monday</div>
+        <div class="day" data-day="Tuesday">Tuesday</div>
+        <div class="day" data-day="Wednesday">Wednesday</div>
+        <div class="day" data-day="Thursday">Thursday</div>
+        <div class="day" data-day="Friday">Friday</div>
+        <div class="day" data-day="Saturday">Saturday</div>
+        <div class="day" data-day="Sunday">Sunday</div>
+    </div>
+
+    <!-- Popup for adding meals -->
+    <div id="meal-popup" class="hidden">
+        <h3 id="popup-day"></h3>
+        <input type="text" id="meal-input" placeholder="Enter meal name">
+        <button id="save-meal">Save</button>
+        <button id="close-popup">Close</button>
+    </div>
+</section>
+
         </div>
     </main>
 
     <footer>
         <p>© 2025 Smart Meal Planner</p>
     </footer>
+    <script src="js/script.js"></script>
 </body>
 </html>
