@@ -1,7 +1,6 @@
 from flask import Flask, render_template, jsonify, request
 
 app = Flask(__name__)
-# Sample recipes data
 recipes = {
     "Spaghetti Carbonara": ["Spaghetti", "Eggs", "Parmesan cheese", "Bacon", "Black pepper"],
     "Tacos": ["Tortillas", "Beef", "Lettuce", "Cheese", "Tomatoes"],
