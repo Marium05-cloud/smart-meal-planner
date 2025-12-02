@@ -1,54 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meal Planner Calendar</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meal Planner Calendar</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* Calendar Styles */
+    .calendar {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 10px;
+      margin: 20px 0;
+    }
+    .day {
+      background: #f0f0f0;
+      padding: 15px;
+      text-align: center;
+      cursor: pointer;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .day:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    }
+
+    /* Popup styling */
+    #meal-popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #fff;
+      border: 2px solid #ccc;
+      padding: 20px;
+      z-index: 1000;
+      width: 250px;
+      text-align: center;
+      display: none;
+      border-radius: 10px;
+    }
+    #meal-popup input {
+      width: 90%;
+      padding: 5px;
+      margin-bottom: 10px;
+    }
+    #meal-popup button {
+      margin: 5px;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        
-        <h1>Smart Meal Planner</h1>
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="calendar.html">Calendar</a>
-            <a href="recipes.html">Recipes</a>
-            <a href="about.html">About</a>
-        </nav>
-    </header>
+  <header>
+    <h1>Smart Meal Planner</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="calendar.html">Calendar</a>
+      <a href="recipes.html">Recipes</a>
+      <a href="about.html">About</a>
+    </nav>
+  </header>
 
-    <main>
-        <h2>Weekly Meal Calendar</h2>
-        <p>Select meals for each day below:</p>
-        <div class="calendar-container">
-            <section id="meal-calendar">
-    <div class="calendar">
-        <div class="day" data-day="Monday">Monday</div>
-        <div class="day" data-day="Tuesday">Tuesday</div>
-        <div class="day" data-day="Wednesday">Wednesday</div>
-        <div class="day" data-day="Thursday">Thursday</div>
-        <div class="day" data-day="Friday">Friday</div>
-        <div class="day" data-day="Saturday">Saturday</div>
-        <div class="day" data-day="Sunday">Sunday</div>
-    </div>
-
-    <!-- Popup for adding meals -->
-    <div id="meal-popup" class="hidden">
-        <h3 id="popup-day"></h3>
-        <input type="text" id="meal-input" placeholder="Enter meal name">
-        <button id="save-meal">Save</button>
-        <button id="close-popup">Close</button>
-    </div>
-</section>
-
+  <main>
+    <h2>Monthly Meal Calendar</h2>
+    <p>Select meals for each day below:</p>
+    <div class="calendar-container">
+      <section id="meal-calendar">
+        <div class="calendar">
+          <!-- Generate 31 days -->
+          <script>
+            for (let i = 1; i <= 31; i++) {
+              document.write(`<div class="day" data-day="Day ${i}">Day ${i}</div>`);
+            }
+          </script>
         </div>
-    </main>
 
-    <footer>
-        <p>© 2025 Smart Meal Planner</p>
-    </footer>
-    <script src="js/script.js"></script>
+        <!-- Popup for adding meals -->
+        <div id="meal-popup">
+          <h3 id="popup-day"></h3>
+          <input type="text" id="meal-input" placeholder="Enter meal name">
+          <button id="save-meal">Save</button>
+          <button id="close-popup">Close</button>
+        </div>
+      </section>
+    </div>s
+  </main>
+
+  <footer>
+    <p>© 2025 Smart Meal Planner</p>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const days = document.querySelectorAll('.day');
+      const popup = document.getElementById('meal-popup');
+      const mealInput = document.getElementById('meal-input');
+      const popupDay = document.getElementById('popup-day');
+      let currentDay = null;
+
+      // Open popup on day click
+      days.forEach(day => {
+        day.addEventListener('click', () => {
+          currentDay = day;
+          popupDay.textContent = "Add meal for " + day.getAttribute('data-day');
+          mealInput.value = day.getAttribute('data-meal') || '';
+          popup.style.display = 'block';
+        });
+      });
+
+      // Save meal
+      document.getElementById('save-meal').addEventListener('click', () => {
+        const meal = mealInput.value.trim();
+        if (meal) {
+          currentDay.setAttribute('data-meal', meal);
+          currentDay.textContent = currentDay.getAttribute('data-day') + ": " + meal;
+        }
+        popup.style.display = 'none';
+      });
+
+      // Close popup without saving
+      document.getElementById('close-popup').addEventListener('click', () => {
+        popup.style.display = 'none';
+      });
+    });
+  </script>
 </body>
 </html>

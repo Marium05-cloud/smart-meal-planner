@@ -1,66 +1,164 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recipes</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Meal Planner - Recipes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    body { font-family: 'Poppins', sans-serif; }
+    header, footer { text-align: center; padding: 10px; }
+    nav a { margin: 0 10px; text-decoration: none; color: #333; font-weight: 600; }
+    h2 { text-align: center; margin-top: 20px; }
+
+    .cuisine-section { margin: 30px auto; max-width: 900px; }
+    .cuisine-header { display: flex; align-items: center; cursor: pointer; background: #f2f2f2; padding: 10px; border-radius: 5px; margin-bottom: 5px; }
+    .cuisine-header img { width: 50px; height: 50px; border-radius: 5px; margin-right: 10px; object-fit: cover; }
+    .dish-list { display: none; margin-left: 60px; }
+    .dish { cursor: pointer; margin-bottom: 8px; padding: 5px; border-radius: 5px; background: #fafafa; border: 1px solid #ddd; transition: background 0.2s; }
+    .dish:hover { background: #e0f7fa; }
+
+    #recipe-popup { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #fff; border: 2px solid #ccc; padding: 20px; z-index: 1000; width: 300px; text-align: left; display: none; border-radius: 10px; max-height: 80%; overflow-y: auto; }
+    #recipe-popup h3 { margin-top: 0; }
+    #recipe-popup button { margin-top: 10px; padding: 5px 10px; cursor: pointer; }
+  </style>
 </head>
 <body>
-    <header>
-       
-        <h1>Smart Meal Planner</h1>
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="calendar.html">Calendar</a>
-            <a href="recipes.html">Recipes</a>
-            <a href="about.html">About</a>
-        </nav>
-    </header>
+<header>
+  <h1>Smart Meal Planner</h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="calendar.html">Calendar</a>
+    <a href="recipes.html">Recipes</a>
+    <a href="about.html">About</a>
+  </nav>
+</header>
 
-    <main>
-        <h2>Our Favorite Recipes</h2>
-        <div class="recipe-grid">
-            <div class="recipe-card">
-                <img src="images/food.png" alt="Recipe">
-                <h3>Grilled Veggie Bowl</h3>
-                <p>Healthy and quick for busy moms.</p>
-            </div>
-            <div class="recipe-card">
-                <img src="images/food.png" alt="Recipe">
-                <h3>Chicken Stir Fry</h3>
-                <p>Protein-packed and delicious.</p>
-            </div>
-        </div>
-    </main>
+<main>
+  <h2>International Cuisine Recipes</h2>
 
-    <footer>
-        <p>© 2025 Smart Meal Planner</p>
-    </footer>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Recipes</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-</head>
-<body>
-    <h1>Recipes</h1>
-    <ul>
-        {% for recipe, ingredients in recipes.items() %}
-        <li>
-            <strong>{{ recipe }}</strong>
-            <ul>
-                {% for ingredient in ingredients %}
-                <li>{{ ingredient }}</li>
-                {% endfor %}
-            </ul>
-        </li>
-        {% endfor %}
-    </ul>
-    <a href="/">Back to Home</a>
+  <!-- Indian Cuisine -->
+  <div class="cuisine-section" data-cuisine="indian">
+    <div class="cuisine-header">
+      <img src="images/indian-cuisine.jpg" alt="Indian Cuisine">
+      <h3>Indian Cuisine</h3>
+    </div>
+    <div class="dish-list">
+      <div class="dish" data-name="Butter Chicken" data-ingredients="Chicken, Butter, Cream, Spices" data-instructions="1. Cook chicken with spices. 2. Add butter and cream. 3. Serve with rice.">Butter Chicken</div>
+      <div class="dish" data-name="Paneer Tikka" data-ingredients="Paneer, Yogurt, Spices, Bell Peppers" data-instructions="1. Marinate paneer with spices and yogurt. 2. Grill or bake. 3. Serve hot.">Paneer Tikka</div>
+      <div class="dish" data-name="Biryani" data-ingredients="Rice, Chicken or Veggies, Spices" data-instructions="1. Cook rice and meat/veggies. 2. Layer with spices. 3. Steam and serve.">Biryani</div>
+    </div>
+  </div>
+
+  <!-- Italian Cuisine -->
+  <div class="cuisine-section" data-cuisine="italian">
+    <div class="cuisine-header">
+      <img src="images/italian-cuisine.jpg" alt="Italian Cuisine">
+      <h3>Italian Cuisine</h3>
+    </div>
+    <div class="dish-list">
+      <div class="dish" data-name="Spaghetti" data-ingredients="Pasta, Tomato Sauce, Olive Oil, Garlic" data-instructions="1. Boil pasta. 2. Prepare sauce. 3. Mix and serve.">Spaghetti</div>
+      <div class="dish" data-name="Margherita Pizza" data-ingredients="Pizza Dough, Tomato, Cheese, Basil" data-instructions="1. Spread tomato and cheese on dough. 2. Bake. 3. Add basil before serving.">Margherita Pizza</div>
+      <div class="dish" data-name="Lasagna" data-ingredients="Pasta sheets, Cheese, Tomato Sauce, Meat or Veggies" data-instructions="1. Layer ingredients. 2. Bake in oven. 3. Serve hot.">Lasagna</div>
+    </div>
+  </div>
+
+  <!-- Mexican Cuisine -->
+  <div class="cuisine-section" data-cuisine="mexican">
+    <div class="cuisine-header">
+      <img src="images/mexican-cuisine.jpg" alt="Mexican Cuisine">
+      <h3>Mexican Cuisine</h3>
+    </div>
+    <div class="dish-list">
+      <div class="dish" data-name="Tacos" data-ingredients="Tortilla, Beef, Lettuce, Cheese" data-instructions="1. Cook beef. 2. Assemble tacos with toppings.">Tacos</div>
+      <div class="dish" data-name="Guacamole" data-ingredients="Avocado, Onion, Tomato, Lime" data-instructions="1. Mash avocado. 2. Mix with chopped veggies. 3. Add lime juice.">Guacamole</div>
+      <div class="dish" data-name="Quesadilla" data-ingredients="Tortilla, Cheese, Chicken/Vegetables" data-instructions="1. Fill tortilla. 2. Cook on skillet. 3. Cut and serve.">Quesadilla</div>
+    </div>
+  </div>
+
+  <!-- Japanese Cuisine -->
+  <div class="cuisine-section" data-cuisine="japanese">
+    <div class="cuisine-header">
+      <img src="images/japanese-cuisine.jpg" alt="Japanese Cuisine">
+      <h3>Japanese Cuisine</h3>
+    </div>
+    <div class="dish-list">
+      <div class="dish" data-name="Sushi" data-ingredients="Rice, Fish, Seaweed" data-instructions="1. Prepare rice. 2. Roll with fish and seaweed. 3. Serve.">Sushi</div>
+      <div class="dish" data-name="Ramen" data-ingredients="Noodles, Broth, Meat, Vegetables" data-instructions="1. Cook broth. 2. Boil noodles. 3. Add toppings. 4. Serve hot.">Ramen</div>
+      <div class="dish" data-name="Tempura" data-ingredients="Vegetables/Shrimp, Batter, Oil" data-instructions="1. Dip items in batter. 2. Deep fry until golden. 3. Serve with sauce.">Tempura</div>
+    </div>
+  </div>
+
+  <!-- Chinese Cuisine -->
+  <div class="cuisine-section" data-cuisine="chinese">
+    <div class="cuisine-header">
+      <img src="images/chinese-cuisine.jpg" alt="Chinese Cuisine">
+      <h3>Chinese Cuisine</h3>
+    </div>
+    <div class="dish-list">
+      <div class="dish" data-name="Fried Rice" data-ingredients="Rice, Vegetables, Eggs, Soy Sauce" data-instructions="1. Stir fry ingredients. 2. Mix with rice. 3. Serve hot.">Fried Rice</div>
+      <div class="dish" data-name="Spring Rolls" data-ingredients="Vegetables, Wrapper, Oil" data-instructions="1. Wrap veggies. 2. Deep fry until golden. 3. Serve with sauce.">Spring Rolls</div>
+      <div class="dish" data-name="Kung Pao Chicken" data-ingredients="Chicken, Peanuts, Chili, Sauce" data-instructions="1. Stir fry chicken and sauce. 2. Add peanuts. 3. Serve hot.">Kung Pao Chicken</div>
+    </div>
+  </div>
+
+  <!-- Thai Cuisine -->
+  <div class="cuisine-section" data-cuisine="thai">
+    <div class="cuisine-header">
+      <img src="images/thai-cuisine.jpg" alt="Thai Cuisine">
+      <h3>Thai Cuisine</h3>
+    </div>
+    <div class="dish-list">
+      <div class="dish" data-name="Pad Thai" data-ingredients="Noodles, Shrimp/Chicken, Peanuts, Sauce" data-instructions="1. Stir fry noodles with protein. 2. Add sauce and peanuts. 3. Serve.">Pad Thai</div>
+      <div class="dish" data-name="Green Curry" data-ingredients="Coconut Milk, Green Curry Paste, Vegetables/Meat" data-instructions="1. Cook curry paste. 2. Add coconut milk and protein. 3. Simmer and serve.">Green Curry</div>
+      <div class="dish" data-name="Tom Yum Soup" data-ingredients="Shrimp, Lemongrass, Lime, Mushrooms" data-instructions="1. Boil water with herbs. 2. Add shrimp and mushrooms. 3. Serve hot.">Tom Yum Soup</div>
+    </div>
+  </div>
+
+</main>
+
+<!-- Popup for recipe details -->
+<div id="recipe-popup">
+  <h3 id="recipe-name"></h3>
+  <p><strong>Ingredients:</strong> <span id="recipe-ingredients"></span></p>
+  <p><strong>Instructions:</strong> <span id="recipe-instructions"></span></p>
+  <button id="close-recipe">Close</button>
+</div>
+
+<footer>
+  <p>© 2025 Smart Meal Planner</p>
+</footer>
+
+<script>
+  // Expand/collapse cuisines
+  const cuisineHeaders = document.querySelectorAll('.cuisine-header');
+  cuisineHeaders.forEach(header => {
+    header.addEventListener('click', () => {
+      const dishList = header.nextElementSibling;
+      dishList.style.display = (dishList.style.display === 'block') ? 'none' : 'block';
+    });
+  });
+
+  // Recipe popup
+  const dishes = document.querySelectorAll('.dish');
+  const popup = document.getElementById('recipe-popup');
+  const recipeName = document.getElementById('recipe-name');
+  const recipeIngredients = document.getElementById('recipe-ingredients');
+  const recipeInstructions = document.getElementById('recipe-instructions');
+
+  dishes.forEach(dish => {
+    dish.addEventListener('click', () => {
+      recipeName.textContent = dish.getAttribute('data-name');
+      recipeIngredients.textContent = dish.getAttribute('data-ingredients');
+      recipeInstructions.textContent = dish.getAttribute('data-instructions');
+      popup.style.display = 'block';
+    });
+  });
+
+  document.getElementById('close-recipe').addEventListener('click', () => {
+    popup.style.display = 'none';
+  });
+</script>
 </body>
 </html>

@@ -139,4 +139,31 @@ footer {
     border: 1px solid #ccc;
     border-radius: 5px;
 }
+/* Popup styling */
+#meal-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  border: 2px solid #ccc;
+  padding: 20px;
+  z-index: 1000;
+  width: 250px;
+  text-align: center;
+  display: none; /* start hidden */
+}
+
+#meal-popup input {
+  width: 90%;
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+#meal-popup button {
+  margin: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
 
