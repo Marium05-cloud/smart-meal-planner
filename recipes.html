@@ -1,164 +1,550 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Smart Meal Planner - Recipes</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Smart Meal Planner — Recipes</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
   <style>
-    body { font-family: 'Poppins', sans-serif; }
-    header, footer { text-align: center; padding: 10px; }
-    nav a { margin: 0 10px; text-decoration: none; color: #333; font-weight: 600; }
-    h2 { text-align: center; margin-top: 20px; }
+    
+    body { font-family: 'Poppins', sans-serif; margin:0; padding:0; color:#222; }
+    main { max-width:1100px; margin:18px auto; padding:0 16px; }
+    h2 { text-align:center; margin-top:18px; }
 
-    .cuisine-section { margin: 30px auto; max-width: 900px; }
-    .cuisine-header { display: flex; align-items: center; cursor: pointer; background: #f2f2f2; padding: 10px; border-radius: 5px; margin-bottom: 5px; }
-    .cuisine-header img { width: 50px; height: 50px; border-radius: 5px; margin-right: 10px; object-fit: cover; }
-    .dish-list { display: none; margin-left: 60px; }
-    .dish { cursor: pointer; margin-bottom: 8px; padding: 5px; border-radius: 5px; background: #fafafa; border: 1px solid #ddd; transition: background 0.2s; }
-    .dish:hover { background: #e0f7fa; }
+    .cuisine-section { margin:20px 0; border-radius:8px; overflow:hidden; border:1px solid #e6e6e6; }
+    .cuisine-header {
+      display:flex; align-items:center; gap:12px;
+      padding:10px 12px; background:#f7f7f7; cursor:pointer;
+    }
+    .cuisine-header img { width:150px; height:150px; object-fit:cover; border-radius:6px; }
+    .cuisine-header .title { font-size:20px; font-weight:700; }
+    .dish-list { display:none; padding:12px 18px 18px 18px; background:#fff; }
+    .dish { padding:8px 10px; border-radius:6px; margin-bottom:8px; background:#fafafa; border:1px solid #eee; cursor:pointer; transition:background 0.15s ease; }
+    .dish:hover { background:#eef7ff; }
 
-    #recipe-popup { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #fff; border: 2px solid #ccc; padding: 20px; z-index: 1000; width: 300px; text-align: left; display: none; border-radius: 10px; max-height: 80%; overflow-y: auto; }
-    #recipe-popup h3 { margin-top: 0; }
-    #recipe-popup button { margin-top: 10px; padding: 5px 10px; cursor: pointer; }
+    /* Popup */
+    #recipe-popup {
+      position:fixed; left:50%; top:50%; transform:translate(-50%,-50%);
+      width:320px; max-width:92%; max-height:84vh; overflow:auto;
+      background:#fff; border-radius:10px; box-shadow:0 10px 30px rgba(0,0,0,0.15);
+      padding:18px; display:none; z-index:2000;
+    }
+    #recipe-popup h3 { margin:0 0 8px 0; }
+    #recipe-popup .section-title { font-weight:600; margin:10px 0 6px; }
+    #recipe-popup ul, #recipe-popup ol { margin:6px 0 12px 18px; padding:0; }
+    #recipe-popup button { padding:6px 10px; margin-top:8px; cursor:pointer; border-radius:6px; border:1px solid #ccc; background:#f3f3f3; }
+
+    /* small responsive */
+    @media (max-width:600px){
+      .cuisine-header { flex-direction:row; gap:10px; }
+      .cuisine-header img { width:90px; height:90px; }
+    }
   </style>
 </head>
 <body>
-<header>
-  <h1>Smart Meal Planner</h1>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="calendar.html">Calendar</a>
-    <a href="recipes.html">Recipes</a>
-    <a href="about.html">About</a>
-  </nav>
-</header>
+  <header>
+    <h1>Smart Meal Planner</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="calendar.html">Calendar</a>
+      <a href="recipes.html">Recipes</a>
+      <a href="about.html">About</a>
+    </nav>
+  </header>
 
-<main>
-  <h2>International Cuisine Recipes</h2>
+  <main>
+    <h2>International Cuisine Recipes</h2>
 
-  <!-- Indian Cuisine -->
-  <div class="cuisine-section" data-cuisine="indian">
-    <div class="cuisine-header">
-      <img src="images/indian-cuisine.jpg" alt="Indian Cuisine">
-      <h3>Indian Cuisine</h3>
+    <!-- 1. Indian -->
+    <div class="cuisine-section" data-cuisine="indian">
+      <div class="cuisine-header" aria-expanded="false">
+        <img src="images/indian.jpg" alt="Indian cuisine image">
+        <div>
+          <div class="title">Indian Cuisine</div>
+          <div style="font-size:13px;color:#666;">Click to expand — popular Indian dishes</div>
+        </div>
+      </div>
+      <div class="dish-list">
+        <div class="dish" data-name="Butter Chicken"
+             data-ingredients="Chicken, Butter, Onion, Tomato Puree, Cream, Ginger, Garlic, Garam Masala, Chili Powder, Salt"
+             data-instructions="1. Marinate chicken with a pinch of salt, turmeric and chili; rest 30–60 minutes.||2. Sauté finely chopped onions in butter until soft and golden.||3. Add ginger-garlic paste and cook until aromatic.||4. Stir in tomato puree and cook down until oil separates.||5. Add spices (garam masala, chili), then add chicken and simmer until cooked through.||6. Stir in cream and a knob of butter; simmer 2–3 minutes.||7. Serve hot with rice or naan.">
+          Butter Chicken
+        </div>
+
+        <div class="dish" data-name="Paneer Tikka"
+             data-ingredients="Paneer, Yogurt, Lemon, Red Chili, Garam Masala, Turmeric, Bell Peppers, Onion"
+             data-instructions="1. Cut paneer and vegetables into cubes.||2. Mix yogurt with spices, lemon and a little oil to make a thick marinade.||3. Toss paneer and veggies in marinade; refrigerate 30+ minutes.||4. Skewer and grill or bake at 220°C until charred edges appear.||5. Serve with mint chutney and lemon wedges.">
+          Paneer Tikka
+        </div>
+
+        <div class="dish" data-name="Biryani"
+             data-ingredients="Basmati Rice, Chicken or Vegetables, Yogurt, Onions, Biryani Masala, Saffron, Ghee"
+             data-instructions="1. Par-cook basmati rice with whole spices until 70% done; drain.||2. Fry thinly sliced onions until caramelized; set aside.||3. Cook marinated meat/veggies with yogurt, spices, and some onions until tender.||4. Layer rice over the cooked meat/veggies; sprinkle saffron milk and fried onions.||5. Seal and cook on low (dum) 20–25 minutes for fragrance and final doneness.||6. Gently mix and serve with raita.">
+          Biryani
+        </div>
+      </div>
     </div>
-    <div class="dish-list">
-      <div class="dish" data-name="Butter Chicken" data-ingredients="Chicken, Butter, Cream, Spices" data-instructions="1. Cook chicken with spices. 2. Add butter and cream. 3. Serve with rice.">Butter Chicken</div>
-      <div class="dish" data-name="Paneer Tikka" data-ingredients="Paneer, Yogurt, Spices, Bell Peppers" data-instructions="1. Marinate paneer with spices and yogurt. 2. Grill or bake. 3. Serve hot.">Paneer Tikka</div>
-      <div class="dish" data-name="Biryani" data-ingredients="Rice, Chicken or Veggies, Spices" data-instructions="1. Cook rice and meat/veggies. 2. Layer with spices. 3. Steam and serve.">Biryani</div>
+
+    <!-- 2. Pakistani -->
+    <div class="cuisine-section" data-cuisine="pakistani">
+      <div class="cuisine-header" aria-expanded="false">
+        <img src="images/pakistani.jpg" alt="Pakistani cuisine image">
+        <div>
+          <div class="title">Pakistani Cuisine</div>
+          <div style="font-size:13px;color:#666;">Hearty, spice-forward favorites</div>
+        </div>
+      </div>
+      <div class="dish-list">
+        <div class="dish" data-name="Nihari"
+             data-ingredients="Beef or Lamb Shanks, Ginger, Garlic, Nihari Masala, Oil, Flour"
+             data-instructions="1. Brown meat pieces in oil; set aside.||2. Sauté ginger-garlic, add nihari masala and water, return meat to pot.||3. Simmer on low for several hours until marrow tender.||4. Thicken with a little flour slurry if desired.||5. Serve with fresh ginger, lemon and naan.">
+          Nihari
+        </div>
+
+        <div class="dish" data-name="Seekh Kebabs"
+             data-ingredients="Minced Lamb/Beef, Onion, Coriander, Green Chili, Garam Masala, Skewers"
+             data-instructions="1. Mix minced meat with spices, onion and herbs; chill for 30 minutes.||2. Shape onto skewers firmly.||3. Grill or broil until fully cooked with a crisp exterior.||4. Serve with chutney and naan.">
+          Seekh Kebabs
+        </div>
+
+        <div class="dish" data-name="Haleem"
+             data-ingredients="Wheat/Barley, Meat, Lentils, Spices, Ghee"
+             data-instructions="1. Soak grains and lentils; pressure-cook with meat and spices until soft.||2. Blend or mash to a thick porridge-like texture.||3. Fry spices in ghee and stir into the cooked mix for aroma.||4. Garnish with fried onions, ginger, coriander and lemon.">
+          Haleem
+        </div>
+      </div>
     </div>
+
+    <!-- 3. Italian -->
+    <div class="cuisine-section" data-cuisine="italian">
+      <div class="cuisine-header" aria-expanded="false">
+        <img src="images/italian.jpg" alt="Italian cuisine image">
+        <div>
+          <div class="title">Italian Cuisine</div>
+          <div style="font-size:13px;color:#666;">Comforting pasta, pizza and more</div>
+        </div>
+      </div>
+      <div class="dish-list">
+        <div class="dish" data-name="Spaghetti Pomodoro"
+             data-ingredients="Spaghetti, Tomatoes, Olive Oil, Garlic, Basil, Parmesan"
+             data-instructions="1. Boil salted water and cook spaghetti until al dente.||2. Gently sauté garlic in olive oil; add chopped ripe tomatoes.||3. Simmer tomatoes until sauce thickens; season with salt and pepper.||4. Toss pasta into sauce with torn basil leaves.||5. Finish with olive oil and grated Parmesan; serve immediately.">
+          Spaghetti Pomodoro
+        </div>
+
+        <div class="dish" data-name="Margherita Pizza"
+             data-ingredients="Pizza Dough, Tomato Sauce, Fresh Mozzarella, Basil, Olive Oil, Salt"
+             data-instructions="1. Preheat oven to its highest setting.||2. Stretch dough thin, spread a light layer of tomato sauce.||3. Add sliced mozzarella and a drizzle of olive oil.||4. Bake until crust is blistered and cheese melted.||5. Top with fresh basil and a pinch of salt before serving.">
+          Margherita Pizza
+        </div>
+
+        <div class="dish" data-name="Risotto alla Milanese"
+             data-ingredients="Arborio Rice, Saffron, Stock, Onion, White Wine, Parmesan, Butter"
+             data-instructions="1. Sauté finely chopped onion in butter until soft.||2. Add rice and toast for 1–2 minutes.||3. Deglaze with white wine; let evaporate.||4. Add warm stock ladle by ladle, stirring until creamy.||5. Stir in saffron-infused stock near the end and finish with Parmesan and butter.">
+          Risotto alla Milanese
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. Mexican -->
+    <div class="cuisine-section" data-cuisine="mexican">
+      <div class="cuisine-header" aria-expanded="false">
+        <img src="images/mexican.jpg" alt="Mexican cuisine image">
+        <div>
+          <div class="title">Mexican Cuisine</div>
+          <div style="font-size:13px;color:#666;">Vibrant, fresh and bold</div>
+        </div>
+      </div>
+      <div class="dish-list">
+        <div class="dish" data-name="Tacos al Pastor"
+             data-ingredients="Pork, Pineapple, Achiote, Chilies, Tortillas, Onion, Cilantro"
+             data-instructions="1. Marinate thin pork slices in achiote paste, chilies and spices overnight.||2. Layer on a spit or grill and cook until edges char.||3. Slice thinly, warm tortillas and top with pineapple, onion and cilantro.||4. Serve with lime wedges and salsa.">
+          Tacos al Pastor
+        </div>
+
+        <div class="dish" data-name="Chicken Enchiladas"
+             data-ingredients="Tortillas, Cooked Chicken, Enchilada Sauce, Cheese, Onion"
+             data-instructions="1. Shred cooked chicken and mix with a little sauce.||2. Fill tortillas, roll and place in a baking dish.||3. Pour enchilada sauce over rolls, top with cheese.||4. Bake until bubbly; garnish with onion and cilantro.">
+          Chicken Enchiladas
+        </div>
+
+        <div class="dish" data-name="Guacamole"
+             data-ingredients="Avocado, Lime, Onion, Tomato, Cilantro, Salt"
+             data-instructions="1. Mash ripe avocados to desired texture.||2. Fold in finely chopped onion, tomato and cilantro.||3. Season with lime and salt; taste and adjust.||4. Serve immediately with chips or as taco topping.">
+          Guacamole
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. Japanese -->
+    <div class="cuisine-section" data-cuisine="japanese">
+      <div class="cuisine-header" aria-expanded="false">
+        <img src="images/japanese.jpg" alt="Japanese cuisine image">
+        <div>
+          <div class="title">Japanese Cuisine</div>
+          <div style="font-size:13px;color:#666;">Delicate flavors and precision</div>
+        </div>
+      </div>
+      <div class="dish-list">
+        <div class="dish" data-name="Classic Sushi Rolls"
+             data-ingredients="Sushi Rice, Nori, Fresh Fish/Vegetable Fillings, Rice Vinegar, Soy Sauce"
+             data-instructions="1. Prepare sushi rice and season with rice vinegar, sugar and salt.||2. Place nori on bamboo mat, spread rice thinly leaving a top edge.||3. Add fillings in a line and roll tightly using the mat.||4. Slice into pieces with a sharp wet knife; serve with soy and wasabi.">
+          Classic Sushi Rolls
+        </div>
+
+        <div class="dish" data-name="Tonkotsu Ramen"
+             data-ingredients="Pork Bones, Noodles, Soy, Mirin, Garlic, Ginger, Scallions"
+             data-instructions="1. Simmer pork bones for many hours to extract creamy broth.||2. Prepare tare (flavor base) with soy and mirin.||3. Cook ramen noodles separately.||4. Assemble bowls with noodles, ladle hot broth, add chashu, egg and scallions.">
+          Tonkotsu Ramen
+        </div>
+
+        <div class="dish" data-name="Tempura"
+             data-ingredients="Shrimp/Vegetables, Flour, Egg, Ice Water, Oil, Dipping Sauce"
+             data-instructions="1. Make a light batter with cold water, egg and flour—do not overmix.||2. Heat oil to 170–180°C.||3. Dip items into batter and fry briefly until crisp and pale golden.||4. Drain and serve with tentsuyu dipping sauce.">
+          Tempura
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. Chinese -->
+    <div class="cuisine-section" data-cuisine="chinese">
+      <div class="cuisine-header" aria-expanded="false">
+        <img src="images/chinese.jpg" alt="Chinese cuisine image">
+        <div>
+          <div class="title">Chinese Cuisine</div>
+          <div style="font-size:13px;color:#666;">Wok-heated and family-friendly</div>
+        </div>
+      </div>
+      <div class="dish-list">
+        <div class="dish" data-name="Fried Rice"
+             data-ingredients="Day-old Rice, Eggs, Vegetables, Soy Sauce, Sesame Oil, Green Onions"
+             data-instructions="1. Use cold day-old rice for best texture.||2. Scramble eggs and set aside.||3. Stir-fry vegetables quickly in a hot wok.||4. Add rice, soy and sesame oil; toss until heated.||5. Fold in eggs and scallions, season and serve.">
+          Fried Rice
+        </div>
+
+        <div class="dish" data-name="Kung Pao Chicken"
+             data-ingredients="Chicken, Peanuts, Dried Chilies, Soy, Vinegar, Sichuan Pepper"
+             data-instructions="1. Marinade chicken briefly and coat with a little cornstarch.||2. Fry dried chilies and peppercorns to flavor oil.||3. Stir-fry chicken until nearly done.||4. Add sauce, peanuts and toss until coated and glossy.||5. Serve with steamed rice.">
+          Kung Pao Chicken
+        </div>
+
+        <div class="dish" data-name="Spring Rolls"
+             data-ingredients="Vegetables, Spring Roll Wrappers, Oil, Dipping Sauce"
+             data-instructions="1. Sauté vegetables until slightly soft; cool.||2. Place filling on wrapper, roll tightly and seal.||3. Deep-fry until golden and crispy.||4. Drain and serve with dipping sauce.">
+          Spring Rolls
+        </div>
+      </div>
+    </div>
+
+    <!-- 7. Thai -->
+    <div class="cuisine-section" data-cuisine="thai">
+      <div class="cuisine-header" aria-expanded="false">
+        <img src="images/thai.jpg" alt="Thai cuisine image">
+        <div>
+          <div class="title">Thai Cuisine</div>
+          <div style="font-size:13px;color:#666;">Bright, spicy and aromatic</div>
+        </div>
+      </div>
+      <div class="dish-list">
+        <div class="dish" data-name="Pad Thai"
+             data-ingredients="Rice Noodles, Tamarind Paste, Fish Sauce, Eggs, Tofu/Shrimp, Peanuts"
+             data-instructions="1. Soak rice noodles until pliable but not soft.||2. Stir-fry protein and tofu; push aside.||3. Scramble egg then add noodles and sauce.||4. Toss everything quickly, finish with crushed peanuts and lime.">
+          Pad Thai
+        </div>
+
+        <div class="dish" data-name="Green Curry"
+             data-ingredients="Green Curry Paste, Coconut Milk, Chicken/Vegetables, Thai Basil, Fish Sauce"
+             data-instructions="1. Fry curry paste briefly to release aroma.||2. Add coconut milk and bring to a gentle simmer.||3. Add protein and vegetables; simmer until cooked.||4. Finish with fish sauce, sugar and basil leaves.">
+          Green Curry
+        </div>
+
+        <div class="dish" data-name="Tom Yum Soup"
+             data-ingredients="Shrimp, Lemongrass, Kaffir Lime Leaves, Galangal, Lime, Chilies"
+             data-instructions="1. Simmer herbs (lemongrass, galangal, lime leaves) to make a broth.||2. Add mushrooms and shrimp until cooked.||3. Season with fish sauce and lime juice; adjust spiciness.||4. Serve hot with fresh cilantro on top.">
+          Tom Yum Soup
+        </div>
+      </div>
+    </div>
+
+    <!-- 8. Middle Eastern -->
+    <div class="cuisine-section" data-cuisine="middle_eastern">
+      <div class="cuisine-header" aria-expanded="false">
+        <img src="images/middle_eastern.jpg" alt="Middle_Eastern cuisine image">
+        <div>
+          <div class="title">Middle Eastern Cuisine</div>
+          <div style="font-size:13px;color:#666;">Hearty grains, spice blends and mezze</div>
+        </div>
+      </div>
+      <div class="dish-list">
+        <div class="dish" data-name="Hummus"
+             data-ingredients="Chickpeas, Tahini, Lemon, Garlic, Olive Oil, Salt"
+             data-instructions="1. Blend cooked chickpeas with tahini, lemon, garlic and olive oil until smooth.||2. Adjust seasoning and texture with a bit of water.||3. Drizzle with olive oil and sprinkle paprika; serve with pita.">
+          Hummus
+        </div>
+
+        <div class="dish" data-name="Shawarma"
+             data-ingredients="Chicken or Lamb, Yogurt, Garlic, Spices, Pita, Pickles"
+             data-instructions="1. Marinate meat in spices and yogurt; refrigerate for hours.||2. Roast or grill until tender and slightly charred.||3. Slice thinly, serve in pita with salad and pickles.">
+          Shawarma
+        </div>
+
+        <div class="dish" data-name="Tabbouleh"
+             data-ingredients="Bulgur, Parsley, Tomato, Mint, Lemon, Olive Oil"
+             data-instructions="1. Soak bulgur until soft; drain.||2. Finely chop parsley and mint.||3. Mix with tomato, lemon juice and olive oil; season to taste.">
+          Tabbouleh
+        </div>
+      </div>
+    </div>
+
+    <!-- 9. American -->
+    <div class="cuisine-section" data-cuisine="american">
+      <div class="cuisine-header" aria-expanded="false">
+        <img src="images/american.jpg" alt="American cuisine image">
+        <div>
+          <div class="title">American Cuisine</div>
+          <div style="font-size:13px;color:#666;">Comfort classics and regional favorites</div>
+        </div>
+      </div>
+      <div class="dish-list">
+        <div class="dish" data-name="BBQ Ribs"
+             data-ingredients="Pork Ribs, BBQ Sauce, Salt, Pepper, Brown Sugar"
+             data-instructions="1. Rub ribs with seasoning and let rest.||2. Cook low and slow (oven or smoker) until tender.||3. Finish with a glaze of BBQ sauce and caramelize briefly.||4. Let rest, then serve with coleslaw.">
+          BBQ Ribs
+        </div>
+
+        <div class="dish" data-name="Mac and Cheese"
+             data-ingredients="Pasta, Cheese, Milk/Bechamel, Butter, Breadcrumbs"
+             data-instructions="1. Cook pasta until al dente.||2. Make a cheesy béchamel sauce with butter, flour and milk.||3. Stir in grated cheeses until smooth.||4. Combine pasta and sauce, top with breadcrumbs and bake until golden.">
+          Mac and Cheese
+        </div>
+
+        <div class="dish" data-name="Classic Burger"
+             data-ingredients="Ground Beef, Salt, Pepper, Buns, Cheese, Toppings"
+             data-instructions="1. Form patties without overworking the meat; season.||2. Cook on a hot grill or skillet to desired doneness.||3. Toast buns and assemble with cheese and toppings.||4. Serve immediately with fries or salad.">
+          Classic Burger
+        </div>
+      </div>
+    </div>
+
+    <!-- 10. French -->
+    <div class="cuisine-section" data-cuisine="french">
+      <div class="cuisine-header" aria-expanded="false">
+        <img src="images/french.jpg" alt="French cuisine image">
+        <div>
+          <div class="title">French Cuisine</div>
+          <div style="font-size:13px;color:#666;">Refined techniques and rich flavors</div>
+        </div>
+      </div>
+      <div class="dish-list">
+        <div class="dish" data-name="Coq au Vin"
+             data-ingredients="Chicken, Red Wine, Bacon, Mushrooms, Onion, Garlic, Thyme"
+             data-instructions="1. Brown bacon and set aside.||2. Brown chicken in the rendered fat; remove.||3. Sauté vegetables, add wine and reduce.||4. Return chicken, add stock and simmer until tender.||5. Finish with mushrooms and bacon pieces.">
+          Coq au Vin
+        </div>
+
+        <div class="dish" data-name="Ratatouille"
+             data-ingredients="Eggplant, Zucchini, Tomato, Bell Pepper, Onion, Herbs"
+             data-instructions="1. Slice vegetables evenly.||2. Sauté aromatics, layer vegetables and simmer gently.||3. Finish with olive oil and fresh herbs.||4. Serve warm or at room temperature.">
+          Ratatouille
+        </div>
+
+        <div class="dish" data-name="Crème Brûlée"
+             data-ingredients="Cream, Egg Yolks, Sugar, Vanilla"
+             data-instructions="1. Heat cream with vanilla; temper into beaten yolks.||2. Bake in a water bath until set but slightly wobbly.||3. Chill fully, then caramelize sugar on top with a torch.||4. Serve with a crisp caramel shell.">
+          Crème Brûlée
+        </div>
+      </div>
+    </div>
+
+    <!-- 11. Turkish -->
+    <div class="cuisine-section" data-cuisine="turkish">
+      <div class="cuisine-header" aria-expanded="false">
+        <img src="images/turkish.jpg" alt="Turkish cuisine image">
+        <div>
+          <div class="title">Turkish Cuisine</div>
+          <div style="font-size:13px;color:#666;">Comforting kebabs and mezze</div>
+        </div>
+      </div>
+      <div class="dish-list">
+        <div class="dish" data-name="Doner Kebab"
+             data-ingredients="Lamb/Chicken, Marinade, Flatbread, Salad, Sauce"
+             data-instructions="1. Marinate meat then stack and cook on a vertical rotisserie or grill.||2. Slice thinly, serve in flatbread with salad and sauces.">
+          Doner Kebab
+        </div>
+
+        <div class="dish" data-name="Kofte"
+             data-ingredients="Minced Meat, Onion, Parsley, Spices"
+             data-instructions="1. Mix ingredients, form into balls or logs.||2. Grill or pan-fry until fully cooked and browned.||3. Serve with yogurt or tomato sauce.">
+          Kofte
+        </div>
+
+        <div class="dish" data-name="Baklava"
+             data-ingredients="Phyllo, Nuts, Butter, Sugar, Honey"
+             data-instructions="1. Layer phyllo with melted butter and nuts.||2. Bake until golden and crisp.||3. Pour sugar-honey syrup over hot pastry and cool fully.">
+          Baklava
+        </div>
+      </div>
+    </div>
+
+    <!-- 12. Korean -->
+    <div class="cuisine-section" data-cuisine="korean">
+      <div class="cuisine-header" aria-expanded="false">
+        <img src="images/korean.jpg" alt="Korean cuisine image">
+        <div>
+          <div class="title">Korean Cuisine</div>
+          <div style="font-size:13px;color:#666;">Bold, spicy and umami-rich</div>
+        </div>
+      </div>
+      <div class="dish-list">
+        <div class="dish" data-name="Bibimbap"
+             data-ingredients="Rice, Vegetables, Meat/Egg, Gochujang, Sesame Oil"
+             data-instructions="1. Cook rice; prepare seasoned vegetables separately.||2. Sear meat with soy and garlic.||3. Assemble rice, arrange veggies and meat on top; add a fried egg.||4. Serve with gochujang and sesame oil; mix before eating.">
+          Bibimbap
+        </div>
+
+        <div class="dish" data-name="Kimchi"
+             data-ingredients="Napa Cabbage, Salt, Chili Flakes, Garlic, Fish Sauce"
+             data-instructions="1. Salt cabbage to wilt and draw moisture.||2. Rinse and combine with spice paste (chili, garlic, fish sauce).||3. Pack into jars and ferment at room temperature a few days then refrigerate.">
+          Kimchi
+        </div>
+
+        <div class="dish" data-name="Bulgogi"
+             data-ingredients="Thinly Sliced Beef, Soy, Sugar, Garlic, Sesame Oil"
+             data-instructions="1. Marinate thin beef slices in soy, sugar and garlic.||2. Cook quickly in a hot skillet until caramelized.||3. Serve with rice and lettuce wraps.">
+          Bulgogi
+        </div>
+      </div>
+    </div>
+
+    <!-- 13. Greek -->
+    <div class="cuisine-section" data-cuisine="greek">
+      <div class="cuisine-header" aria-expanded="false">
+        <img src="images/greek.jpg" alt="Greek cuisine image">
+        <div>
+          <div class="title">Greek Cuisine</div>
+          <div style="font-size:13px;color:#666;">Fresh, herby Mediterranean flavors</div>
+        </div>
+      </div>
+      <div class="dish-list">
+        <div class="dish" data-name="Moussaka"
+             data-ingredients="Eggplant, Minced Meat, Tomato, Bechamel, Olive Oil"
+             data-instructions="1. Fry or roast eggplant slices; set aside.||2. Cook a spiced meat-tomato sauce.||3. Layer eggplant and sauce, top with béchamel.||4. Bake until set and golden.">
+          Moussaka
+        </div>
+
+        <div class="dish" data-name="Greek Salad"
+             data-ingredients="Tomato, Cucumber, Onion, Feta, Olives, Olive Oil"
+             data-instructions="1. Chop vegetables and toss with olive oil and salt.||2. Top with large chunks of feta and olives.||3. Serve chilled as a side or light main.">
+          Greek Salad
+        </div>
+
+        <div class="dish" data-name="Souvlaki"
+             data-ingredients="Pork/Chicken, Lemon, Oregano, Skewers, Pita"
+             data-instructions="1. Marinate meat with lemon, oregano and olive oil.||2. Skewer and grill until cooked through.||3. Serve in pita with tzatziki and salad.">
+          Souvlaki
+        </div>
+    </div>
+
+  </main>
+
+  <!-- Popup for recipe details -->
+  <div id="recipe-popup" role="dialog" aria-modal="true" aria-hidden="true">
+    <h3 id="recipe-name"></h3>
+    <div class="section-title">Ingredients</div>
+    <ul id="recipe-ingredients"></ul>
+    <div class="section-title">Instructions</div>
+    <ol id="recipe-instructions"></ol>
+    <button id="close-recipe">Close</button>
   </div>
 
-  <!-- Italian Cuisine -->
-  <div class="cuisine-section" data-cuisine="italian">
-    <div class="cuisine-header">
-      <img src="images/italian-cuisine.jpg" alt="Italian Cuisine">
-      <h3>Italian Cuisine</h3>
-    </div>
-    <div class="dish-list">
-      <div class="dish" data-name="Spaghetti" data-ingredients="Pasta, Tomato Sauce, Olive Oil, Garlic" data-instructions="1. Boil pasta. 2. Prepare sauce. 3. Mix and serve.">Spaghetti</div>
-      <div class="dish" data-name="Margherita Pizza" data-ingredients="Pizza Dough, Tomato, Cheese, Basil" data-instructions="1. Spread tomato and cheese on dough. 2. Bake. 3. Add basil before serving.">Margherita Pizza</div>
-      <div class="dish" data-name="Lasagna" data-ingredients="Pasta sheets, Cheese, Tomato Sauce, Meat or Veggies" data-instructions="1. Layer ingredients. 2. Bake in oven. 3. Serve hot.">Lasagna</div>
-    </div>
-  </div>
+  <footer>
+    <p style="font-size:13px;color:#666;">© 2025 Smart Meal Planner</p>
+  </footer>
 
-  <!-- Mexican Cuisine -->
-  <div class="cuisine-section" data-cuisine="mexican">
-    <div class="cuisine-header">
-      <img src="images/mexican-cuisine.jpg" alt="Mexican Cuisine">
-      <h3>Mexican Cuisine</h3>
-    </div>
-    <div class="dish-list">
-      <div class="dish" data-name="Tacos" data-ingredients="Tortilla, Beef, Lettuce, Cheese" data-instructions="1. Cook beef. 2. Assemble tacos with toppings.">Tacos</div>
-      <div class="dish" data-name="Guacamole" data-ingredients="Avocado, Onion, Tomato, Lime" data-instructions="1. Mash avocado. 2. Mix with chopped veggies. 3. Add lime juice.">Guacamole</div>
-      <div class="dish" data-name="Quesadilla" data-ingredients="Tortilla, Cheese, Chicken/Vegetables" data-instructions="1. Fill tortilla. 2. Cook on skillet. 3. Cut and serve.">Quesadilla</div>
-    </div>
-  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Toggle cuisine sections
+      const headers = document.querySelectorAll('.cuisine-header');
+      headers.forEach(h => {
+        h.addEventListener('click', () => {
+          const list = h.nextElementSibling;
+          const expanded = h.getAttribute('aria-expanded') === 'true';
+          h.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+          list.style.display = expanded ? 'none' : 'block';
+        });
+      });
 
-  <!-- Japanese Cuisine -->
-  <div class="cuisine-section" data-cuisine="japanese">
-    <div class="cuisine-header">
-      <img src="images/japanese-cuisine.jpg" alt="Japanese Cuisine">
-      <h3>Japanese Cuisine</h3>
-    </div>
-    <div class="dish-list">
-      <div class="dish" data-name="Sushi" data-ingredients="Rice, Fish, Seaweed" data-instructions="1. Prepare rice. 2. Roll with fish and seaweed. 3. Serve.">Sushi</div>
-      <div class="dish" data-name="Ramen" data-ingredients="Noodles, Broth, Meat, Vegetables" data-instructions="1. Cook broth. 2. Boil noodles. 3. Add toppings. 4. Serve hot.">Ramen</div>
-      <div class="dish" data-name="Tempura" data-ingredients="Vegetables/Shrimp, Batter, Oil" data-instructions="1. Dip items in batter. 2. Deep fry until golden. 3. Serve with sauce.">Tempura</div>
-    </div>
-  </div>
+      // Dish click -> show popup
+      const dishes = document.querySelectorAll('.dish');
+      const popup = document.getElementById('recipe-popup');
+      const recipeName = document.getElementById('recipe-name');
+      const recipeIngredients = document.getElementById('recipe-ingredients');
+      const recipeInstructions = document.getElementById('recipe-instructions');
+      const closeBtn = document.getElementById('close-recipe');
 
-  <!-- Chinese Cuisine -->
-  <div class="cuisine-section" data-cuisine="chinese">
-    <div class="cuisine-header">
-      <img src="images/chinese-cuisine.jpg" alt="Chinese Cuisine">
-      <h3>Chinese Cuisine</h3>
-    </div>
-    <div class="dish-list">
-      <div class="dish" data-name="Fried Rice" data-ingredients="Rice, Vegetables, Eggs, Soy Sauce" data-instructions="1. Stir fry ingredients. 2. Mix with rice. 3. Serve hot.">Fried Rice</div>
-      <div class="dish" data-name="Spring Rolls" data-ingredients="Vegetables, Wrapper, Oil" data-instructions="1. Wrap veggies. 2. Deep fry until golden. 3. Serve with sauce.">Spring Rolls</div>
-      <div class="dish" data-name="Kung Pao Chicken" data-ingredients="Chicken, Peanuts, Chili, Sauce" data-instructions="1. Stir fry chicken and sauce. 2. Add peanuts. 3. Serve hot.">Kung Pao Chicken</div>
-    </div>
-  </div>
+      function openPopup(dish) {
+        // clear previous
+        recipeName.textContent = '';
+        recipeIngredients.innerHTML = '';
+        recipeInstructions.innerHTML = '';
 
-  <!-- Thai Cuisine -->
-  <div class="cuisine-section" data-cuisine="thai">
-    <div class="cuisine-header">
-      <img src="images/thai-cuisine.jpg" alt="Thai Cuisine">
-      <h3>Thai Cuisine</h3>
-    </div>
-    <div class="dish-list">
-      <div class="dish" data-name="Pad Thai" data-ingredients="Noodles, Shrimp/Chicken, Peanuts, Sauce" data-instructions="1. Stir fry noodles with protein. 2. Add sauce and peanuts. 3. Serve.">Pad Thai</div>
-      <div class="dish" data-name="Green Curry" data-ingredients="Coconut Milk, Green Curry Paste, Vegetables/Meat" data-instructions="1. Cook curry paste. 2. Add coconut milk and protein. 3. Simmer and serve.">Green Curry</div>
-      <div class="dish" data-name="Tom Yum Soup" data-ingredients="Shrimp, Lemongrass, Lime, Mushrooms" data-instructions="1. Boil water with herbs. 2. Add shrimp and mushrooms. 3. Serve hot.">Tom Yum Soup</div>
-    </div>
-  </div>
+        // name
+        recipeName.textContent = dish.getAttribute('data-name') || 'Recipe';
 
-</main>
+        // ingredients (comma separated)
+        const rawIngredients = dish.getAttribute('data-ingredients') || '';
+        rawIngredients.split(',').map(s => s.trim()).filter(Boolean).forEach(item => {
+          const li = document.createElement('li');
+          li.textContent = item;
+          recipeIngredients.appendChild(li);
+        });
 
-<!-- Popup for recipe details -->
-<div id="recipe-popup">
-  <h3 id="recipe-name"></h3>
-  <p><strong>Ingredients:</strong> <span id="recipe-ingredients"></span></p>
-  <p><strong>Instructions:</strong> <span id="recipe-instructions"></span></p>
-  <button id="close-recipe">Close</button>
-</div>
+        // instructions (steps separated by ||)
+        const rawSteps = dish.getAttribute('data-instructions') || '';
+        rawSteps.split('||').map(s => s.trim()).filter(Boolean).forEach(step => {
+          const li = document.createElement('li');
+          li.textContent = step;
+          recipeInstructions.appendChild(li);
+        });
 
-<footer>
-  <p>© 2025 Smart Meal Planner</p>
-</footer>
+        popup.style.display = 'block';
+        popup.setAttribute('aria-hidden', 'false');
+      }
 
-<script>
-  // Expand/collapse cuisines
-  const cuisineHeaders = document.querySelectorAll('.cuisine-header');
-  cuisineHeaders.forEach(header => {
-    header.addEventListener('click', () => {
-      const dishList = header.nextElementSibling;
-      dishList.style.display = (dishList.style.display === 'block') ? 'none' : 'block';
+      dishes.forEach(d => {
+        d.addEventListener('click', (e) => { openPopup(d); e.stopPropagation(); });
+      });
+
+      // Close popup
+      closeBtn.addEventListener('click', () => {
+        popup.style.display = 'none';
+        popup.setAttribute('aria-hidden', 'true');
+      });
+
+      // Close if user clicks outside popup
+      window.addEventListener('click', (e) => {
+        if (popup.style.display === 'block' && !popup.contains(e.target)) {
+          popup.style.display = 'none';
+          popup.setAttribute('aria-hidden', 'true');
+        }
+      });
+
+      // Keyboard escape to close
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && popup.style.display === 'block') {
+          popup.style.display = 'none';
+          popup.setAttribute('aria-hidden', 'true');
+        }
+      });
     });
-  });
+  </script>
 
-  // Recipe popup
-  const dishes = document.querySelectorAll('.dish');
-  const popup = document.getElementById('recipe-popup');
-  const recipeName = document.getElementById('recipe-name');
-  const recipeIngredients = document.getElementById('recipe-ingredients');
-  const recipeInstructions = document.getElementById('recipe-instructions');
-
-  dishes.forEach(dish => {
-    dish.addEventListener('click', () => {
-      recipeName.textContent = dish.getAttribute('data-name');
-      recipeIngredients.textContent = dish.getAttribute('data-ingredients');
-      recipeInstructions.textContent = dish.getAttribute('data-instructions');
-      popup.style.display = 'block';
-    });
-  });
-
-  document.getElementById('close-recipe').addEventListener('click', () => {
-    popup.style.display = 'none';
-  });
-</script>
+  <!-- Helpful note for you:
+       Put images in images/ with these filenames (or update src accordingly):
+       indian.jpg, pakistani.jpg, italian.jpg, mexican.jpg, japanese.jpg, chinese.jpg,
+       thai.jpg, middle-eastern.jpg, american.jpg, french.jpg, turkish.jpg, korean.jpg,
+       greek.jpg, spanish.jpg
+  -->
 </body>
 </html>
+
