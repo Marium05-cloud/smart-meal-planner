@@ -457,94 +457,33 @@
     <button id="close-recipe">Close</button>
   </div>
 
-  <footer>
-    <p style="font-size:13px;color:#666;">© 2025 Smart Meal Planner</p>
-  </footer>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // Toggle cuisine sections
-      const headers = document.querySelectorAll('.cuisine-header');
-      headers.forEach(h => {
-        h.addEventListener('click', () => {
-          const list = h.nextElementSibling;
-          const expanded = h.getAttribute('aria-expanded') === 'true';
-          h.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-          list.style.display = expanded ? 'none' : 'block';
-        });
-      });
-
-      // Dish click -> show popup
-      const dishes = document.querySelectorAll('.dish');
-      const popup = document.getElementById('recipe-popup');
-      const recipeName = document.getElementById('recipe-name');
-      const recipeIngredients = document.getElementById('recipe-ingredients');
-      const recipeInstructions = document.getElementById('recipe-instructions');
-      const closeBtn = document.getElementById('close-recipe');
-
-      function openPopup(dish) {
-        // clear previous
-        recipeName.textContent = '';
-        recipeIngredients.innerHTML = '';
-        recipeInstructions.innerHTML = '';
-
-        // name
-        recipeName.textContent = dish.getAttribute('data-name') || 'Recipe';
-
-        // ingredients (comma separated)
-        const rawIngredients = dish.getAttribute('data-ingredients') || '';
-        rawIngredients.split(',').map(s => s.trim()).filter(Boolean).forEach(item => {
-          const li = document.createElement('li');
-          li.textContent = item;
-          recipeIngredients.appendChild(li);
-        });
-
-        // instructions (steps separated by ||)
-        const rawSteps = dish.getAttribute('data-instructions') || '';
-        rawSteps.split('||').map(s => s.trim()).filter(Boolean).forEach(step => {
-          const li = document.createElement('li');
-          li.textContent = step;
-          recipeInstructions.appendChild(li);
-        });
-
-        popup.style.display = 'block';
-        popup.setAttribute('aria-hidden', 'false');
-      }
-
-      dishes.forEach(d => {
-        d.addEventListener('click', (e) => { openPopup(d); e.stopPropagation(); });
-      });
-
-      // Close popup
-      closeBtn.addEventListener('click', () => {
-        popup.style.display = 'none';
-        popup.setAttribute('aria-hidden', 'true');
-      });
-
-      // Close if user clicks outside popup
-      window.addEventListener('click', (e) => {
-        if (popup.style.display === 'block' && !popup.contains(e.target)) {
-          popup.style.display = 'none';
-          popup.setAttribute('aria-hidden', 'true');
-        }
-      });
-
-      // Keyboard escape to close
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && popup.style.display === 'block') {
-          popup.style.display = 'none';
-          popup.setAttribute('aria-hidden', 'true');
-        }
-      });
-    });
-  </script>
-
-  <!-- Helpful note for you:
-       Put images in images/ with these filenames (or update src accordingly):
-       indian.jpg, pakistani.jpg, italian.jpg, mexican.jpg, japanese.jpg, chinese.jpg,
-       thai.jpg, middle-eastern.jpg, american.jpg, french.jpg, turkish.jpg, korean.jpg,
-       greek.jpg, spanish.jpg
-  -->
+    <footer>
+        <p>© 2025 Smart Meal Planner</p>
+    </footer>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Recipes</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h1>Recipes</h1>
+    <ul>
+        {% for recipe, ingredients in recipes.items() %}
+        <li>
+            <strong>{{ recipe }}</strong>
+            <ul>
+                {% for ingredient in ingredients %}
+                <li>{{ ingredient }}</li>
+                {% endfor %}
+            </ul>
+        </li>
+        {% endfor %}
+    </ul>
+    <a href="/">Back to Home</a>
 </body>
 </html>
 
